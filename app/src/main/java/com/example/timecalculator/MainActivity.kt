@@ -20,7 +20,9 @@ class MainActivity : ComponentActivity() {
 
         val startTimeInput: EditText = findViewById(R.id.startTimeInput)
         val endTimeInput: EditText = findViewById(R.id.endTimeInput)
+        val intervalIndexInput: EditText = findViewById(R.id.intervalIndexInput)
         val addButton: Button = findViewById(R.id.addButton)
+        val editButton: Button = findViewById(R.id.editButton)
         val clearButton: Button = findViewById(R.id.clearButton)
         val resultTextView: TextView = findViewById(R.id.resultTextView)
 
@@ -39,11 +41,34 @@ class MainActivity : ComponentActivity() {
             }
         }
 
+        editButton.setOnClickListener {
+            val indexText = intervalIndexInput.text.toString()
+            val startTime = startTimeInput.text.toString()
+            val endTime = endTimeInput.text.toString()
+
+            val index = indexText.toIntOrNull()
+            if (index != null && index in intervals.indices) {
+                if (isValidTime(startTime) && isValidTime(endTime)) {
+                    intervals[index] = Pair(startTime, endTime)
+                    val totalDuration = calculateTotalDuration()
+                    resultTextView.text = formatResult(totalDuration)
+                    startTimeInput.text.clear()
+                    endTimeInput.text.clear()
+                    intervalIndexInput.text.clear()
+                } else {
+                    resultTextView.text = "Invalid time format. Use HHmm (e.g., 0845)."
+                }
+            } else {
+                resultTextView.text = "Invalid index. Enter a valid interval number."
+            }
+        }
+
         clearButton.setOnClickListener {
             intervals.clear()
             resultTextView.text = ""
             startTimeInput.text.clear()
             endTimeInput.text.clear()
+            intervalIndexInput.text.clear()
         }
     }
 

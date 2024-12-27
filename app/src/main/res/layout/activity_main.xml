@@ -9,23 +9,41 @@
     <EditText
         android:id="@+id/startTimeInput"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:hint="Start Time (e.g., 12:00 PM)"
-        android:inputType="text" />
+        android:layout_height="wrap_content"
+        android:hint="@string/start_time_hint"
+        android:inputType="number" />
 
     <EditText
         android:id="@+id/endTimeInput"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:hint="End Time (e.g., 2:00 PM)"
-        android:inputType="text" />
+        android:layout_height="wrap_content"
+        android:hint="@string/end_time_hint"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/intervalIndexInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/interval_index_hint"
+        android:inputType="number" />
 
     <Button
         android:id="@+id/addButton"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add Interval"
-        android:layout_gravity="center_horizontal" />
+        android:text="@string/add_button_text" />
+
+    <Button
+        android:id="@+id/editButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/edit_button_text" />
+
+    <Button
+        android:id="@+id/clearButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/clear_button_text" />
 
     <TextView
         android:id="@+id/resultTextView"
@@ -34,10 +52,8 @@
         android:layout_marginTop="16dp"
         android:textSize="16sp" />
 
-    <Button
-        android:id="@+id/clearButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Clear"
-        android:layout_gravity="center_horizontal" />
+    <ListView
+        android:id="@+id/intervalListView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>
