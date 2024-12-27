@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/startTimeInput"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="Start Time (e.g., 12:00 PM)"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/endTimeInput"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="End Time (e.g., 2:00 PM)"
+        android:inputType="text" />
+
+    <Button
+        android:id="@+id/addButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Interval"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:id="@+id/resultTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/clearButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Clear"
+        android:layout_gravity="center_horizontal" />
+</LinearLayout>
