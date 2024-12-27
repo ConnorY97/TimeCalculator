@@ -8,6 +8,8 @@ import android.widget.TextView
 import androidx.activity.ComponentActivity
 import java.text.SimpleDateFormat
 import java.util.*
+import android.widget.ArrayAdapter
+import android.widget.ListView
 
 class MainActivity : ComponentActivity() {
 
@@ -25,6 +27,11 @@ class MainActivity : ComponentActivity() {
         val editButton: Button = findViewById(R.id.editButton)
         val clearButton: Button = findViewById(R.id.clearButton)
         val resultTextView: TextView = findViewById(R.id.resultTextView)
+        val intervalListView: ListView = findViewById(R.id.intervalListView)
+
+        // Adapter for ListView
+        val adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mutableListOf())
+        intervalListView.adapter = adapter
 
         addButton.setOnClickListener {
             val startTime = startTimeInput.text.toString()
@@ -32,6 +39,7 @@ class MainActivity : ComponentActivity() {
 
             if (isValidTime(startTime) && isValidTime(endTime)) {
                 intervals.add(Pair(startTime, endTime))
+                adapter.add("Interval: $startTime - $endTime")
                 val totalDuration = calculateTotalDuration()
                 resultTextView.text = formatResult(totalDuration)
                 startTimeInput.text.clear()
@@ -39,6 +47,14 @@ class MainActivity : ComponentActivity() {
             } else {
                 resultTextView.text = "Invalid time format. Use HHmm (e.g., 0845)."
             }
+        }
+
+        // Handle item selection for editing
+        intervalListView.setOnItemClickListener { _, _, position, _ ->
+            val selectedInterval = intervals[position]
+            startTimeInput.setText(selectedInterval.first)
+            endTimeInput.setText(selectedInterval.second)
+            intervalIndexInput.setText(position.toString())
         }
 
         editButton.setOnClickListener {
@@ -49,7 +65,15 @@ class MainActivity : ComponentActivity() {
             val index = indexText.toIntOrNull()
             if (index != null && index in intervals.indices) {
                 if (isValidTime(startTime) && isValidTime(endTime)) {
+                    // Update the selected interval in the list
                     intervals[index] = Pair(startTime, endTime)
+
+                    // Update the ListView item
+                    adapter.clear()  // Clear all items in the ListView
+                    intervals.forEach { (start, end) ->  // Add all updated intervals back
+                        adapter.add("Interval: $start - $end")
+                    }
+
                     val totalDuration = calculateTotalDuration()
                     resultTextView.text = formatResult(totalDuration)
                     startTimeInput.text.clear()
@@ -65,6 +89,7 @@ class MainActivity : ComponentActivity() {
 
         clearButton.setOnClickListener {
             intervals.clear()
+            adapter.clear()  // Clear the ListView
             resultTextView.text = ""
             startTimeInput.text.clear()
             endTimeInput.text.clear()
@@ -105,3 +130,4 @@ class MainActivity : ComponentActivity() {
         return "Intervals:\n$intervalDetails\n\nTotal: $hours hrs $minutes mins"
     }
 }
+
