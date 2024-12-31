@@ -10,15 +10,17 @@
         android:id="@+id/startTimeInput"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:hint="Start Time (e.g., 12:00 PM)"
-        android:inputType="text" />
+        android:hint="Start Time (e.g., 1200)"
+        android:inputType="number"
+        android:maxLength="4" />
 
     <EditText
         android:id="@+id/endTimeInput"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:hint="End Time (e.g., 2:00 PM)"
-        android:inputType="text" />
+        android:hint="End Time (e.g., 1400)"
+        android:inputType="number"
+        android:maxLength="4" />
 
     <Button
         android:id="@+id/addButton"
@@ -27,17 +29,25 @@
         android:text="Add Interval"
         android:layout_gravity="center_horizontal" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/intervalsRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="16dp" />
+
     <TextView
-        android:id="@+id/resultTextView"
+        android:id="@+id/totalDurationText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/clearButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Clear"
+        android:text="Clear All"
         android:layout_gravity="center_horizontal" />
 </LinearLayout>
