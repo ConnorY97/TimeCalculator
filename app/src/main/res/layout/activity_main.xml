@@ -6,28 +6,63 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <EditText
-        android:id="@+id/startTimeInput"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:hint="Start Time (e.g., 1200)"
-        android:inputType="number"
-        android:maxLength="4" />
-
-    <EditText
-        android:id="@+id/endTimeInput"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:hint="End Time (e.g., 1400)"
-        android:inputType="number"
-        android:maxLength="4" />
-
-    <Button
-        android:id="@+id/addButton"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="380dp"
         android:layout_height="wrap_content"
-        android:text="Add Interval"
-        android:layout_gravity="center_horizontal" />
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="16dp">
+
+        <EditText
+            android:id="@+id/startTimeInput"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:hint="@string/start_time_hint"
+            android:inputType="number"
+            android:maxLength="4"
+            android:autofillHints="startTime" />
+
+        <EditText
+            android:id="@+id/endTimeInput"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:hint="@string/end_time_hint"
+            android:inputType="number"
+            android:maxLength="4"
+            android:autofillHints="endTime" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        style="?android:attr/buttonBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="16dp">
+
+        <Button
+            android:id="@+id/currentTimeButton"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/insert_current_time"
+            android:layout_marginEnd="8dp"
+            android:textColor="#00695C"
+            android:background="#FAFAFA" />
+
+        <Button
+            android:id="@+id/addButton"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_interval"
+            android:textColor="#00695C"
+            android:background="#FAFAFA" />
+    </LinearLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/intervalsRecyclerView"
@@ -48,6 +83,6 @@
         android:id="@+id/clearButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Clear All"
+        android:text="@string/clear_all"
         android:layout_gravity="center_horizontal" />
 </LinearLayout>

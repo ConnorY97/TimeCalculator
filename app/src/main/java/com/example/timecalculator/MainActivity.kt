@@ -27,6 +27,8 @@ class MainActivity : ComponentActivity() {
         val clearButton: Button = findViewById(R.id.clearButton)
         val totalDurationText: TextView = findViewById(R.id.totalDurationText)
         val recyclerView: RecyclerView = findViewById(R.id.intervalsRecyclerView)
+        val currentTimeButton: Button = findViewById(R.id.currentTimeButton)
+
 
         // Set up RecyclerView
         adapter = TimeIntervalAdapter(
@@ -62,11 +64,22 @@ class MainActivity : ComponentActivity() {
         }
 
         clearButton.setOnClickListener {
+            val size = intervals.size
             intervals.clear()
-            adapter.notifyDataSetChanged()
+            adapter.notifyItemRangeRemoved(0, size)  // Specify the range of items removed
             updateTotalDuration(totalDurationText)
             startTimeInput.text.clear()
             endTimeInput.text.clear()
+        }
+
+        currentTimeButton.setOnClickListener {
+            val currentTime = timeFormat.format(Calendar.getInstance().time)
+
+            when {
+                startTimeInput.isFocused -> startTimeInput.setText(currentTime)
+                endTimeInput.isFocused -> endTimeInput.setText(currentTime)
+                else -> showError("Please select a field to input the current time.")
+            }
         }
     }
 

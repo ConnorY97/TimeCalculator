@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">TimeCalculator</string>
+    <string name="start_time_hint">Start Time (e.g., 1200)</string>
+    <string name="end_time_hint">End Time (e.g., 1400)</string>
+    <string name="add_interval">Add Interval</string>
+    <string name="clear_all">Clear All</string>
+    <string name="insert_current_time">Now</string>
+    <string name="error_invalid_time">Invalid time format. Use 24-hour format (e.g., 0845).</string>
+    <string name="error_overlapping_intervals">This interval overlaps with an existing interval.</string>
+    <string name="error_select_field">Please select a field to input the current time.</string>
+    <string name="total_duration">Total</string>
+    <string name="intervals_label">Intervals:</string>
 </resources>
