@@ -21,7 +21,14 @@
             android:hint="@string/start_time_hint"
             android:inputType="number"
             android:maxLength="4"
-            android:autofillHints="startTime" />
+            android:autofillHints="startTime"
+            android:background="@drawable/edit_text_background"
+            android:padding="12dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColorHint="#BDBDBD"
+            android:elevation="2dp"
+            android:drawablePadding="8dp" />
 
         <EditText
             android:id="@+id/endTimeInput"
@@ -31,8 +38,16 @@
             android:hint="@string/end_time_hint"
             android:inputType="number"
             android:maxLength="4"
-            android:autofillHints="endTime" />
+            android:autofillHints="endTime"
+            android:background="@drawable/edit_text_background"
+            android:padding="12dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColorHint="#BDBDBD"
+            android:elevation="2dp"
+            android:drawablePadding="8dp" />
     </LinearLayout>
+
 
 
     <LinearLayout
@@ -51,7 +66,9 @@
             android:text="@string/insert_current_time"
             android:layout_marginEnd="8dp"
             android:textColor="#00695C"
-            android:background="#FAFAFA" />
+            android:background="@drawable/button_background"
+            android:padding="16dp"
+            android:elevation="4dp" />
 
         <Button
             android:id="@+id/addButton"
@@ -60,7 +77,9 @@
             android:layout_height="wrap_content"
             android:text="@string/add_interval"
             android:textColor="#00695C"
-            android:background="#FAFAFA" />
+            android:background="@drawable/button_background"
+            android:padding="16dp"
+            android:elevation="4dp" />
     </LinearLayout>
 
 
@@ -84,5 +103,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/clear_all"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/button_background"
+        android:padding="16dp"
+        android:elevation="4dp"/>
+
 </LinearLayout>
