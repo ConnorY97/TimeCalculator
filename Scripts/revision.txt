@@ -1,0 +1,10 @@
+Time Calculator Revisions
+
+**Features**
+- App icon
+- Updated button themes
+
+**TO DO**
+- The ability to calculate the total time during a week
+    This would include creating a calculator for each day that would then be added together for the total time
+- Improve UI
