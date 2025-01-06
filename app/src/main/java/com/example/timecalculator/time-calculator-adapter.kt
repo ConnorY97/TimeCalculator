@@ -56,9 +56,10 @@ class TimeIntervalAdapter(
 
         holder.deleteButton.setOnClickListener {
             intervals.removeAt(position)
-            notifyDataSetChanged()
+            notifyItemRemoved(position)
             onIntervalChanged()
         }
+
 
         holder.saveButton.setOnClickListener {
             val newStart = holder.startTimeEdit.text.toString()
@@ -80,9 +81,15 @@ class TimeIntervalAdapter(
             interval.startTime = newStart
             interval.endTime = newEnd
             interval.isEditing = false
+
             updateViewVisibility(holder, false)
+
+            // Notify adapter about the change
+            notifyItemChanged(position)
+
             onIntervalChanged()
         }
+
 
         holder.cancelButton.setOnClickListener {
             interval.isEditing = false
@@ -112,7 +119,7 @@ class TimeIntervalAdapter(
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable?) {
-                if (s?.length ?: 0 > 4) {
+                if ((s?.length ?: 0) > 4) {
                     editText.setText(s?.subSequence(0, 4))
                     editText.setSelection(4)
                 }

@@ -95,23 +95,12 @@ class MainActivity : ComponentActivity() {
 
         val hours = totalMinutes / 60
         val minutes = totalMinutes % 60
+        // Use the string resource with placeholders
+        val formattedTotal = getString(R.string.total_duration, hours, minutes)
+        totalDurationText.text = formattedTotal
 
-        val intervalDetails = intervals.joinToString("\n") { interval ->
-            val startTime = timeFormat.parse(interval.startTime)!!
-            val endTime = timeFormat.parse(interval.endTime)!!
-            val duration = (endTime.time - startTime.time) / (1000 * 60)
-            "${interval.startTime} - ${interval.endTime} (${duration / 60} hrs ${duration % 60} mins)"
-        }
-
-        totalDurationText.text = buildString {
-            if (intervalDetails.isNotEmpty()) {
-                append("Intervals:\n")
-                append(intervalDetails)
-                append("\n\n")
-            }
-            append("Total: $hours hrs $minutes mins")
-        }
     }
+
 
     private fun showError(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
