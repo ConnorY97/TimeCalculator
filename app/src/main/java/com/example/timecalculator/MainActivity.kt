@@ -1,7 +1,11 @@
 // MainActivity.kt
 package com.example.timecalculator
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -83,6 +87,36 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        Log.d("MainActivity", "Menu created")  // Check Logcat to confirm this runs
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_save -> {
+                // Handle Save Game action
+                Log.i("menu_save", "Saving board")
+                true
+            }
+            R.id.menu_main -> {
+                val homeScreen = Intent(this, HomeActivity::class.java).apply {
+                    addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+                }
+                startActivity(homeScreen)
+                finish() // Optional if you want to finish this activity explicitly
+                true
+            }
+            R.id.menu_exit -> {
+                // Handle Exit action
+                finishAffinity() // Close the app
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
     private fun updateTotalDuration(totalDurationText: TextView) {
         var totalMinutes = 0L
 
@@ -100,7 +134,6 @@ class MainActivity : ComponentActivity() {
         totalDurationText.text = formattedTotal
 
     }
-
 
     private fun showError(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()

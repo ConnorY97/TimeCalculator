@@ -11,4 +11,9 @@
     <string name="total_duration">Total: %1$d hrs %2$d mins</string>
     <string name="intervals_label">Intervals:</string>
     <string name="total_time">Total: 0 hrs 0 mins</string>
+    <string name="time_calculator">Time Calculator</string>
+    <string name="new_interval">New Interval</string>
+    <string name="sub_menu_save">Save</string>
+    <string name="sub_menu_main_manu">Main Manu</string>
+    <string name="sub_menu_exit">Exit</string>
 </resources>
