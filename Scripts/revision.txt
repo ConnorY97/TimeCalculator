@@ -1,13 +1,8 @@
 # Time Calculator Revisions
 
 ### Features
-- Improved the look of the total time
-- Removed the old `Intervals` list as it was just doubling up
-
-### Fixes
-- Fixed the new values of intervals not being displayed
+- Moved the input fields to the bottom of the screen to improve functionality
 
 ### TO DO
 - The ability to calculate the total time during a week
     This would include creating a calculator for each day that would then be added together for the total time
-- Improve UI
