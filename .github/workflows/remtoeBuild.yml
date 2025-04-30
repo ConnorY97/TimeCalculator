@@ -28,13 +28,13 @@ jobs:
       - name: Rename APK to TimeCalculator.apk
         shell: bash
         run: |
-          echo mv app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/debug/TimeCalculator.apk
+          mv app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/debug/TimeCalculator.apk
 
       - name: Get Commit Message
         shell: bash
         run: |
             COMMIT_MSG=$(git log -1 --pretty=%B)
-            echo "COMMIT_MSG=$COMMIT_MSG" >> $GITHUB_ENV
+            "COMMIT_MSG=$COMMIT_MSG" >> $GITHUB_ENV
 
       - name: Release
         uses: softprops/action-gh-release@v2
