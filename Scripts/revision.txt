@@ -1,7 +1,7 @@
 # Time Calculator Revisions
 
 ### Features
-- Moved the input fields to the bottom of the screen to improve functionality
+- Removed landing page for the time being. This improves usability as you are straight into inputting times.
 
 ### TO DO
 - The ability to calculate the total time during a week
