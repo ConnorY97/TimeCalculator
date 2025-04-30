@@ -1,80 +1,78 @@
-# name: Build and Create Release
+name: Build and Create Release
 
-# on:
-#   push:
-#     tags:
-#       - "*"
+on:
+  workflow_dispatch:
 
-# jobs:
-#   build:
-#     name: Build APK
-#     runs-on: self-hosted  # Use the self-hosted runner
+jobs:
+  build:
+    name: Build APK
+    runs-on: self-hosted  # Use the self-hosted runner
 
-#     env:
-#       APK_PATH: app/build/outputs/apk/debug/
+    env:
+      APK_PATH: app/build/outputs/apk/debug/
 
-#     steps:
-#       - name: Update Perms
-#         shell: bash
-#         run: |
-#           echo ${{ secrets.SUDO_PASS }} | sudo -S chmod -R 776 ../TimeCalculator
+    steps:
+      - name: Update Perms
+        shell: bash
+        run: |
+          echo ${{ secrets.SUDO_PASS }} | sudo -S chmod -R 776 ../TimeCalculator
 
-#       - name: Setting Ownership
-#         shell: bash
-#         run: |
-#           echo ${{ secrets.SUDO_PASS }} | sudo -S chown -R connor:connor ../TimeCalculator
+      - name: Setting Ownership
+        shell: bash
+        run: |
+          echo ${{ secrets.SUDO_PASS }} | sudo -S chown -R connor:connor ../TimeCalculator
 
-#       - name: Checkout Repo
-#         uses: actions/checkout@v4
-#         with:
-#           lfs: false
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+        with:
+          lfs: false
 
-#       - name: Create Properties File
-#         id: create_prop_file
-#         shell: bash
-#         run: |
-#           echo "sdk.dir=/home/connor/Android/Sdk" >> local.properties
+      - name: Create Properties File
+        id: create_prop_file
+        shell: bash
+        run: |
+          echo "sdk.dir=/home/connor/Android/Sdk" >> local.properties
 
-#       - name: Update gradlew Perms
-#         shell: bash
-#         run: |
-#           echo ${{ secrets.SUDO_PASS }} | sudo -S chmod 766 gradlew
+      - name: Update gradlew Perms
+        shell: bash
+        run: |
+          echo ${{ secrets.SUDO_PASS }} | sudo -S chmod 766 gradlew
 
-#       - name: Clean
-#         shell: bash
-#         run: |
-#           echo ${{ secrets.SUDO_PASS }} | sudo -S ./gradlew clean
+      - name: Clean
+        shell: bash
+        run: |
+          echo ${{ secrets.SUDO_PASS }} | sudo -S ./gradlew clean
 
-#       - name: Build APK
-#         shell: bash
-#         run: |
-#           echo ${{ secrets.SUDO_PASS }} | sudo -S ./gradlew assembleDebug
+      - name: Build APK
+        shell: bash
+        run: |
+          echo ${{ secrets.SUDO_PASS }} | sudo -S ./gradlew assembleDebug
 
-#       - name: Rename APK to TimeCalculator.apk
-#         shell: bash
-#         run: |
-#           echo ${{ secrets.SUDO_PASS }} | sudo -S mv ${{ env.APK_PATH }}app-debug.apk ${{ env.APK_PATH }}TimeCalculator.apk
+      - name: Rename APK to TimeCalculator.apk
+        shell: bash
+        run: |
+          echo ${{ secrets.SUDO_PASS }} | sudo -S mv ${{ env.APK_PATH }}app-debug.apk ${{ env.APK_PATH }}TimeCalculator.apk
 
-#       - name: Get Commit Message
-#         shell: bash
-#         run: |
-#           COMMIT_MSG=$(git log -1 --pretty=%B)
-#           echo "COMMIT_MSG=$COMMIT_MSG" >> $GITHUB_ENV
+      - name: Get Commit Message
+        shell: bash
+        run: |
+          COMMIT_MSG=$(git log -1 --pretty=%B)
+          echo "COMMIT_MSG=$COMMIT_MSG" >> $GITHUB_ENV
 
-#       - name: Release
-#         uses: softprops/action-gh-release@v2
-#         with:
-#           name: "${{ env.COMMIT_MSG }}"
-#           body_path: "./Scripts/revision.txt"
-#           body: "Continued work on development"
-#           draft: false
-#           token: ${{ secrets.TOKEN }}
-#           files:
-#             ${{ env.APK_PATH }}TimeCalculator.apk
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "${{ env.COMMIT_MSG }}"
+          body_path: "./Scripts/revision.txt"
+          body: "Continued work on development"
+          draft: false
+          token: ${{ secrets.TOKEN }}
+          files:
+            ${{ env.APK_PATH }}TimeCalculator.apk
 
 
-#       - name: Clean up
-#         if: steps.create_prop_file.outcome == 'success'
-#         shell: bash
-#         run: |
-#           echo ${{ secrets.SUDO_PASS }} | sudo -S rm local.properties
+      - name: Clean up
+        if: steps.create_prop_file.outcome == 'success'
+        shell: bash
+        run: |
+          echo ${{ secrets.SUDO_PASS }} | sudo -S rm local.properties
