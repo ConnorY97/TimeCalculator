@@ -1,9 +1,9 @@
 name: Remote Build and Create Release
 
 on:
-    push:
-        branches:
-            - "workflow-testing"
+  push:
+      tags:
+        - "*"
 
 jobs:
   build:
@@ -25,8 +25,24 @@ jobs:
       - name: Build with Gradle
         run : ./gradlew build
 
-      - name: Upload a Build Artifact
-        uses: actions/upload-artifact@v4.6.2
+      - name: Rename APK to TimeCalculator.apk
+        shell: bash
+        run: |
+          echo mv app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/debug/TimeCalculator.apk
+
+      - name: Get Commit Message
+        shell: bash
+        run: |
+            COMMIT_MSG=$(git log -1 --pretty=%B)
+            echo "COMMIT_MSG=$COMMIT_MSG" >> $GITHUB_ENV
+
+      - name: Release
+        uses: softprops/action-gh-release@v2
         with:
-          name: TimeCalculator.apk
-          path: app/build/outputs/apk/debug/app-debug.apk
+            name: "${{ env.COMMIT_MSG }}"
+            body_path: "./Scripts/revision.txt"
+            body: "Continued work on development"
+            draft: false
+            token: ${{ secrets.TOKEN }}
+            files:
+              app/build/outputs/apk/debug/TimeCalculator.apk
