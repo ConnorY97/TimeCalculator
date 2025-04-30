@@ -53,6 +53,6 @@ jobs:
             body_path: "./Scripts/revision.txt"
             body: "Continued work on development"
             draft: false
-            token: ${{ secrets.TOKEN }}
+            token: ${{ secrets.GITHUB_TOKEN }}
             files:
               app/build/outputs/apk/debug/TimeCalculator.apk
