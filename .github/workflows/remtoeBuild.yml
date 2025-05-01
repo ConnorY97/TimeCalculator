@@ -5,6 +5,10 @@ on:
       tags:
         - "*"
 
+env:
+  APK_NAME: TimeCalculator.apk
+  APK_PATH: app/build/outputs/apk/debug
+
 jobs:
   build:
     runs-on : ubuntu-latest
@@ -38,7 +42,7 @@ jobs:
       - name: Rename APK to TimeCalculator.apk
         shell: bash
         run: |
-          mv app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/debug/TimeCalculator.apk
+          mv $APK_PATH/app-debug.apk $APK_PATH/$APK_NAME
 
       - name: Get Commit Message
         shell: bash
@@ -53,6 +57,6 @@ jobs:
             body_path: "./Scripts/revision.txt"
             body: "Continued work on development"
             draft: false
-            token: ${{ secrets.GITHUB_TOKEN }}
+            token: ${{ secrets.TOKEN }}
             files:
-              app/build/outputs/apk/debug/TimeCalculator.apk
+              ${{ env.APK_PATH }}/${{ env.APK_NAME }}
