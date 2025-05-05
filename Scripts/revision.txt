@@ -1,7 +1,10 @@
 # Time Calculator Revisions
 
 ### Features
-- Removed landing page for the time being. This improves usability as you are straight into inputting times.
+- Improved UX
+    Start time input is focused when you open the app
+    You can move to the end time input by pressing enter now
+    After adding intervals start time input is refocused
 
 ### TO DO
 - The ability to calculate the total time during a week

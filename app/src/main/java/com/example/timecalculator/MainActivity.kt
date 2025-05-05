@@ -33,6 +33,24 @@ class MainActivity : ComponentActivity() {
         val recyclerView: RecyclerView = findViewById(R.id.intervalsRecyclerView)
         val currentTimeButton: Button = findViewById(R.id.currentTimeButton)
 
+        // Set the start time input as the focus and open the keyboard on launch
+        startTimeInput.requestFocus()
+        startTimeInput.postDelayed({
+            val imm = getSystemService(INPUT_METHOD_SERVICE) as android.view.inputmethod.InputMethodManager
+            imm.showSoftInput(startTimeInput, android.view.inputmethod.InputMethodManager.SHOW_IMPLICIT)
+        }, 100)
+
+        // Set the end time input as the focus if enter in pressed while in the start time input
+        startTimeInput.setOnEditorActionListener { _, actionId, event ->
+            val isEnter = (event != null && event.keyCode == android.view.KeyEvent.KEYCODE_ENTER)
+            val isDone = (actionId == android.view.inputmethod.EditorInfo.IME_ACTION_DONE)
+
+            if (isEnter || isDone) {
+                endTimeInput.requestFocus()
+                return@setOnEditorActionListener true
+            }
+            false
+        }
 
         // Set up RecyclerView
         adapter = TimeIntervalAdapter(
@@ -65,6 +83,9 @@ class MainActivity : ComponentActivity() {
                     endTimeInput.text.clear()
                 }
             }
+
+            // Rest the focus on the start time
+            startTimeInput.requestFocus()
         }
 
         clearButton.setOnClickListener {
@@ -74,6 +95,9 @@ class MainActivity : ComponentActivity() {
             updateTotalDuration(totalDurationText)
             startTimeInput.text.clear()
             endTimeInput.text.clear()
+
+            // Rest the focus on the start time
+            startTimeInput.requestFocus()
         }
 
         currentTimeButton.setOnClickListener {
