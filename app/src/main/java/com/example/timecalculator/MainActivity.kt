@@ -1,6 +1,7 @@
 // MainActivity.kt
 package com.example.timecalculator
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -15,11 +16,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import java.text.SimpleDateFormat
 import java.util.*
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import androidx.core.content.edit
 
 class MainActivity : ComponentActivity() {
     private val intervals = mutableListOf<TimeInterval>()
     private val timeFormat = SimpleDateFormat("HHmm", Locale.US)
     private lateinit var adapter: TimeIntervalAdapter
+    private val gson = Gson()
+    private val sharedPrefs by lazy { getSharedPreferences("time_intervals", Context.MODE_PRIVATE) }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +59,19 @@ class MainActivity : ComponentActivity() {
             false
         }
 
+        // Add interval if enter is pressed while in end time input
+        endTimeInput.setOnEditorActionListener { _, actionId, event ->
+            val isEnter = (event != null && event.keyCode == android.view.KeyEvent.KEYCODE_ENTER)
+            val isDone = (actionId == android.view.inputmethod.EditorInfo.IME_ACTION_DONE)
+
+            if (isEnter || isDone) {
+                addInterval(startTimeInput, endTimeInput, totalDurationText)
+                startTimeInput.requestFocus()
+                return@setOnEditorActionListener true
+            }
+            false
+        }
+
         // Set up RecyclerView
         adapter = TimeIntervalAdapter(
             intervals = intervals,
@@ -62,30 +82,12 @@ class MainActivity : ComponentActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
+        // Safe to load intervals
+        // Load any existing intervals
+        loadIntervals()
+
         addButton.setOnClickListener {
-            val startTime = startTimeInput.text.toString()
-            val endTime = endTimeInput.text.toString()
-
-            val newInterval = TimeInterval(startTime, endTime)
-
-            when {
-                !newInterval.isValid() -> {
-                    showError("Invalid time format. Use 24-hour format (e.g., 0845)")
-                }
-                intervals.any { newInterval.overlaps(it) } -> {
-                    showError("This interval overlaps with an existing interval")
-                }
-                else -> {
-                    intervals.add(newInterval)
-                    adapter.notifyItemInserted(intervals.size - 1)
-                    updateTotalDuration(totalDurationText)
-                    startTimeInput.text.clear()
-                    endTimeInput.text.clear()
-                }
-            }
-
-            // Rest the focus on the start time
-            startTimeInput.requestFocus()
+            addInterval(startTimeInput, endTimeInput, totalDurationText)
         }
 
         clearButton.setOnClickListener {
@@ -111,6 +113,38 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    private fun addInterval(
+        startTimeInput: EditText,
+        endTimeInput: EditText,
+        totalDurationText: TextView
+    ) {
+        val startTime = startTimeInput.text.toString()
+        val endTime = endTimeInput.text.toString()
+
+        val newInterval = TimeInterval(startTime, endTime)
+
+        when {
+            !newInterval.isValid() -> {
+                showError("Invalid time format. Use 24-hour format (e.g., 0845)")
+            }
+
+            intervals.any { newInterval.overlaps(it) } -> {
+                showError("This interval overlaps with an existing interval")
+            }
+
+            else -> {
+                intervals.add(newInterval)
+                adapter.notifyItemInserted(intervals.size - 1)
+                updateTotalDuration(totalDurationText)
+                startTimeInput.text.clear()
+                endTimeInput.text.clear()
+            }
+        }
+
+        // Rest the focus on the start time
+        startTimeInput.requestFocus()
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
         Log.d("MainActivity", "Menu created")  // Check Logcat to confirm this runs
@@ -120,8 +154,8 @@ class MainActivity : ComponentActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_save -> {
-                // Handle Save Game action
-                Log.i("menu_save", "Saving board")
+                saveIntervals()
+                Log.i("menu_save", "Saving intervals")
                 true
             }
             R.id.menu_main -> {
@@ -162,4 +196,25 @@ class MainActivity : ComponentActivity() {
     private fun showError(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
+
+    private fun saveIntervals() {
+        val json = gson.toJson(intervals)
+        sharedPrefs.edit() { putString("interval_list", json) }
+        Toast.makeText(this, "Intervals saved", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun loadIntervals() {
+        val json = sharedPrefs.getString("interval_list", null)
+        if (!json.isNullOrEmpty()) {
+            val type = object : TypeToken<MutableList<TimeInterval>>() {}.type
+            val savedIntervals: MutableList<TimeInterval> = gson.fromJson(json, type)
+
+            intervals.clear()
+            adapter.notifyItemRangeRemoved(0, adapter.itemCount)  // Let RecyclerView know items were removed
+
+            intervals.addAll(savedIntervals)
+            adapter.notifyItemRangeInserted(0, intervals.size)    // Let RecyclerView know new items were inserted
+        }
+    }
+
 }

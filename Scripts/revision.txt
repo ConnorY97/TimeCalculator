@@ -1,10 +1,7 @@
 # Time Calculator Revisions
 
 ### Features
-- Improved UX
-    Start time input is focused when you open the app
-    You can move to the end time input by pressing enter now
-    After adding intervals start time input is refocused
+- Current intervals can now be saved.
 
 ### TO DO
 - The ability to calculate the total time during a week
