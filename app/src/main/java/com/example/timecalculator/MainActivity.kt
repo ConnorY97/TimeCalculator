@@ -67,6 +67,7 @@ class MainActivity : ComponentActivity() {
             if (isEnter || isDone) {
                 addInterval(startTimeInput, endTimeInput, totalDurationText)
                 startTimeInput.requestFocus()
+                saveIntervals()
                 return@setOnEditorActionListener true
             }
             false
@@ -88,6 +89,7 @@ class MainActivity : ComponentActivity() {
 
         addButton.setOnClickListener {
             addInterval(startTimeInput, endTimeInput, totalDurationText)
+            saveIntervals()
         }
 
         clearButton.setOnClickListener {
@@ -100,6 +102,7 @@ class MainActivity : ComponentActivity() {
 
             // Rest the focus on the start time
             startTimeInput.requestFocus()
+            saveIntervals()
         }
 
         currentTimeButton.setOnClickListener {

@@ -1,7 +1,7 @@
 # Time Calculator Revisions
 
 ### Features
-- Current intervals can now be saved.
+- Intervals will be saved on clear and adding a new interval
 
 ### TO DO
 - The ability to calculate the total time during a week
