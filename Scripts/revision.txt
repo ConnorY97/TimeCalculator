@@ -1,7 +1,7 @@
 # Time Calculator Revisions
 
 ### Features
-- Intervals will be saved on clear and adding a new interval
+- Displaying the decimal value of the duration
 
 ### TO DO
 - The ability to calculate the total time during a week

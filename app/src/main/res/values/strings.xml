@@ -8,9 +8,10 @@
     <string name="error_invalid_time">Invalid time format. Use 24-hour format (e.g., 0845).</string>
     <string name="error_overlapping_intervals">This interval overlaps with an existing interval.</string>
     <string name="error_select_field">Please select a field to input the current time.</string>
-    <string name="total_duration">Total: %1$d hrs %2$d mins</string>
+    <string name="total_duration">%1$dh %2$dm</string>
+    <string name="total_value">%1$s</string>
     <string name="intervals_label">Intervals:</string>
-    <string name="total_time">Total: 0 hrs 0 mins</string>
+    <string name="total_time">0 h 0 m</string>
     <string name="time_calculator">Time Calculator</string>
     <string name="new_interval">New Interval</string>
     <string name="sub_menu_save">Save</string>
