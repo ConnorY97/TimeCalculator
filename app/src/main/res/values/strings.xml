@@ -16,4 +16,6 @@
     <string name="sub_menu_save">Save</string>
     <string name="sub_menu_main_manu">Main Manu</string>
     <string name="sub_menu_exit">Exit</string>
+    <string name="start_time_edit">0000</string>
+    <string name="end_time_edit">0000</string>
 </resources>
