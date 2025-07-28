@@ -2,7 +2,7 @@
 
 ### Features
 
-- Existing intervals are can now be edited by clicking on the text rather than using a button and then saving by pressing enter on the keyboard.
+- Removing Toast pop up covering time calculation when saving intervals
 
 ### TO DO
 - The ability to calculate the total time during a week

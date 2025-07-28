@@ -194,7 +194,6 @@ class MainActivity : ComponentActivity() {
     private fun saveIntervals() {
         val json = gson.toJson(intervals)
         sharedPrefs.edit { putString("interval_list", json) }
-        Toast.makeText(this, "Intervals saved", Toast.LENGTH_SHORT).show()
     }
 
     private fun loadIntervals() {
