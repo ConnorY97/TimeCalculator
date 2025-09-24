@@ -70,7 +70,8 @@ class MainActivity : ComponentActivity() {
                 updateTotalDuration(totalDurationText)
                 updateTotalValue(totalValueText)
             },
-            onValidationError = { message -> showError(message) }
+            onValidationError = { message -> showError(message) },
+            onSaveIntervals = { saveIntervals() }
         )
 
         recyclerView.layoutManager = LinearLayoutManager(this)

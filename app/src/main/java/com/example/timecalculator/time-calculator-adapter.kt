@@ -11,7 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 class TimeIntervalAdapter(
     private val intervals: MutableList<TimeInterval>,
     private val onIntervalChanged: () -> Unit,
-    private val onValidationError: (String) -> Unit
+    private val onValidationError: (String) -> Unit,
+    private val onSaveIntervals: () -> Unit
 ) : RecyclerView.Adapter<TimeIntervalAdapter.IntervalViewHolder>() {
 
     inner class IntervalViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -83,8 +84,8 @@ class TimeIntervalAdapter(
         intervals[position] = updated
         notifyItemChanged(position)
         onIntervalChanged()
+        onSaveIntervals()
     }
-
-
+    
     override fun getItemCount() = intervals.size
 }
