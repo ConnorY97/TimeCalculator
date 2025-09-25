@@ -37,16 +37,37 @@ jobs:
       - name: Build with Gradle
         run : ./gradlew build
 
-      - name: Rename APK to TimeCalculator.apk
+      - name: Find and Rename APK
         shell: bash
         run: |
-          mv $APK_PATH/app-debug.apk $APK_PATH/$APK_NAME
+          APK_FILE=$(find "$APK_PATH" -type f -name "*.apk" | head -n 1)
+
+          if [ -z "$APK_FILE" ]; then
+            echo "❌ No APK file found in $APK_PATH"
+            exit 1
+          fi
+
+          echo "Found APK: $APK_FILE"
+          mv "$APK_FILE" "$APK_PATH/$APK_NAME"
+          echo "Renamed to: $APK_PATH/$APK_NAME"
 
       - name: Get Commit Message
+        id: get_commit
         shell: bash
         run: |
-            COMMIT_MSG=$(git log -1 --pretty=%B)
-            echo "COMMIT_MSG=$COMMIT_MSG" >> $GITHUB_ENV
+          set +e
+          COMMIT_MSG=$(git log -1 --pretty=%B 2>/dev/null || echo "")
+          set -e
+
+          if [ -z "$COMMIT_MSG" ]; then
+            COMMIT_MSG="New Release"
+          fi
+
+          COMMIT_MSG="${COMMIT_MSG//'%'/'%25'}"
+          COMMIT_MSG="${COMMIT_MSG//$'\n'/'%0A'}"
+          COMMIT_MSG="${COMMIT_MSG//$'\r'/'%0D'}"
+
+          echo "COMMIT_MSG=$COMMIT_MSG" >> $GITHUB_ENV
 
       - name: Release
         uses: softprops/action-gh-release@v2

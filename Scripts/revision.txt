@@ -2,7 +2,10 @@
 
 ### Features
 
-- Removing Toast pop up covering time calculation when saving intervals
+- Editing intervals will now also save current values
+
+### Fixes
+- Potential faluire points in build action.
 
 ### TO DO
 - The ability to calculate the total time during a week
